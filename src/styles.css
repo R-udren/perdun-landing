@@ -1,0 +1,223 @@
+/* Perdun landing theme v3. Lunar Client inspired: near-black neutral base,
+   rounded and smooth everywhere, big bold rounded type, single green accent. */
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 12px;
+
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.84 0.19 152);
+  --primary-foreground: oklch(0.17 0.05 152);
+  --secondary: oklch(0.24 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.24 0 0);
+  --muted-foreground: oklch(0.71 0 0);
+  --accent: oklch(0.24 0 0);
+  --accent-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.63 0.2 25);
+  --destructive-foreground: oklch(0.97 0.01 20);
+  --border: oklch(0.28 0 0);
+  --input: oklch(0.28 0 0);
+  --ring: oklch(0.84 0.19 152);
+}
+
+@theme inline {
+  /* Plus Jakarta Sans ExtraBold: big, bold, softly rounded (Lunar headline energy).
+     Inter: neutral, highly readable body. */
+  --font-display: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-void: #0a0a0c;
+  --color-coal: #101014;
+  --color-panel: #17171c;
+  --color-edge: #2a2a31;
+  --color-snow: #fafafa;
+  --color-mist: #a8a8b0;
+  --color-neon: #3ee27f;
+  --color-neon-soft: #7bf0a8;
+  --color-moss: #04130a;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Reserve the scrollbar lane even when content fits, so nothing reflows
+     when a section or the browser makes the scrollbar appear. */
+  scrollbar-gutter: stable;
+}
+
+/* Dark themed scrollbar, consistent across engines. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  border: 2px solid var(--color-void);
+  background: color-mix(in oklab, var(--color-snow) 16%, transparent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--color-neon) 55%, transparent);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-void);
+}
+
+/* Firefox. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--color-snow) 16%, transparent)
+      var(--color-void);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-void);
+  color: var(--color-snow);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-neon);
+  color: var(--color-moss);
+}
+
+/* Cinematic settle on the key art: slow zoom-out while the page opens. */
+.hero-art {
+  animation: hero-art 26s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-art {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art {
+    animation: none;
+  }
+}
+
+/* Gentle float on the hero mark. */
+.hero-float {
+  animation: hero-float 7s ease-in-out infinite alternate;
+}
+
+@keyframes hero-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-float {
+    animation: none;
+  }
+}
+
+/* Snow drift over the hero art. Flakes are decorative only. */
+.flake {
+  position: absolute;
+  top: -4vh;
+  border-radius: 9999px;
+  background: white;
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -6vh, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--flake-o, 0.6);
+  }
+  90% {
+    opacity: var(--flake-o, 0.6);
+  }
+  100% {
+    transform: translate3d(var(--flake-x, 3vw), 106vh, 0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flake {
+    display: none;
+  }
+}
+
+/* Nav treatment once the page scrolls. Only blur on the whole page. */
+.nav-solid {
+  backdrop-filter: blur(12px);
+  background: color-mix(in oklab, var(--color-void) 82%, transparent);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
